@@ -1,0 +1,457 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap");
+
+$break-tablet: 767px;
+
+@mixin respond-to($media) {
+  @if $media == tablet {
+    @media (max-width: $break-tablet) { @content; }
+  }
+}
+
+@mixin themify($themes: $themes) {
+  @each $theme, $map in $themes {
+
+    .theme-#{$theme} & {
+      $theme-map: () !global;
+      @each $key, $submap in $map {
+        $value: map-get(map-get($themes, $theme), '#{$key}');
+        $theme-map: map-merge($theme-map, ($key: $value)) !global;
+      }
+
+      @content;
+      $theme-map: null !global;
+    }
+
+  }
+}
+
+@function themed($key) {
+  @return map-get($theme-map, $key);
+}
+
+$themes: (
+  light: (
+    backgroundColor: #fafafa,
+    lightBackgroundColor: #ffffff,
+    textColor: #484b6a,
+    lightTextColor: #96979c,
+    hoverColor: #3a7bfd,
+    borderColor: #e6e5ea,
+    showOpacity: 0,
+    hideOpacity: 1,
+  ),
+  dark: (
+    backgroundColor: #161722,
+    lightBackgroundColor: #25273c,
+    textColor: #cacde8,
+    lightTextColor: #5f617a,
+    hoverColor: #3a7bfd,
+    borderColor: #37394e,
+    showOpacity: 1,
+    hideOpacity: 0,
+  ),
+);
+
+* {
+  box-sizing: border-box;
+}
+html, body {
+  margin: 0;
+  font-family: 'Josefin Sans';
+  font-size: 18px;
+  @include respond-to(tablet) {
+    font-size: 12px;
+  }
+}
+a, button, input {
+  cursor: pointer;
+  font-family: 'Josefin Sans';
+  transition: all 0.3s ease-in-out;
+}
+p {
+  margin: 0;
+}
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 570px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.page-content {
+  position: relative;
+  min-height: 100vh;
+  padding-top: 75px;
+  transition: all 0.3s ease-in-out;
+  @include respond-to(tablet) {
+    padding-top: 48px;
+  }
+  @include themify($themes) {
+    color: themed('textColor');  
+    background-color: themed('backgroundColor');
+  }
+  .container {
+    z-index: 1;
+  }
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 300px;
+    background-image: url(../images/bg-desktop-dark.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: all 0.3s ease-in-out;
+    @include respond-to(tablet) {
+      height: 200px;
+    }
+    @include themify($themes) {
+      opacity: themed('showOpacity');;
+    }
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 300px;
+    background-image: url(../images/bg-desktop-light.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+    @include respond-to(tablet) {
+      height: 200px;
+    }
+    @include themify($themes) {
+      opacity: themed('hideOpacity');;
+    }
+  }
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  h1 {
+    color: white;
+    margin: 0;
+    font-size: 36px;
+    letter-spacing: 15px;
+    text-transform: uppercase;
+    @include respond-to(tablet) {
+      font-size: 24px;
+    }
+  }
+  .btn-wrap {
+    .btn {
+      cursor: pointer;
+      position: relative;
+      background: transparent;
+      border: none;
+      width: 36px;
+      height: 36px;
+      outline: none;
+      border-radius: 5px;
+      @include respond-to(tablet) {
+        width: 24px;
+        height: 24px;
+      }
+      img {
+        position: absolute;
+        left: 5px;
+        top: 5px;
+        width: 26px;
+        height: 26px;
+        transition: all 0.3s ease-in-out;
+        @include respond-to(tablet) {
+          left: 2px;
+          top: 2px;
+          width: 20px;
+          height: 20px;
+        }
+        @include themify($themes) {
+          opacity: themed('hideOpacity');  
+        }
+        &.dark-theme {
+          opacity: 1;
+          @include themify($themes) {
+            opacity: themed('showOpacity');  
+          }
+        }
+      }
+    }
+  }
+}
+.add-wrapper {
+  margin: 40px 0 23px;
+  @include respond-to(tablet) {
+    margin: 30px 0 16px;
+  }
+}
+.new-item-wrapper {
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 50%;
+    left: 24px;
+    border-radius: 50%;
+    transform: translateY(-50%);
+    @include respond-to(tablet) {
+      width: 18px;
+      height: 18px;
+      left: 18px;
+    }
+    @include themify($themes) {
+      border: 1px solid themed('borderColor');
+    }
+  }
+  input[type=text] {
+    font-family: 'Josefin Sans';
+    font-size: 18px;
+    height: 64px;
+    border: 0;
+    border-radius: 5px;
+    width: 100%;
+    outline: none;
+    padding: 12px 40px 12px 72px;
+    box-shadow: 0px 4px 15px 2px rgba(0,0,0,0.3);
+    &::-webkit-placeholder {
+      opacity: 0.8;
+    }
+    @include respond-to(tablet) {
+      font-size: 12px;
+      height: 48px;
+      padding: 8px 36px 8px 54px;
+    }
+    @include themify($themes) {
+      color: themed('textColor');  
+      background-color: themed('lightBackgroundColor');
+    }
+  }
+}
+.todo-panel {
+  margin-top: 24px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 15px 2px rgba(0,0,0,0.3);
+  transition: all 0.3s ease-in-out;
+  @include respond-to(tablet) {
+    margin-top: 16px;
+  }
+  @include themify($themes) {
+    background-color: themed('lightBackgroundColor');
+  }
+}
+.todo-lst {
+  &-item {
+    cursor: pointer;
+    position: relative;
+    height: 64px;
+    padding: 0 40px 0 18px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease-in-out;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    @include respond-to(tablet) {
+      height: 48px;
+      padding: 0 36px 0 18px;
+    }
+    @include themify($themes) {
+      color: themed('textColor');  
+      background-color: themed('lightBackgroundColor');
+      border-bottom: 1px solid themed('borderColor');
+    }
+    &__close {
+      position: absolute;
+      right: 24px;
+      top: 26px;
+      width: 12px;
+      height: 12px;
+      background-color: transparent;
+      border: none;
+      outline: none;
+      background-image: url(../images/icon-cross.svg);
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      opacity: 0;
+      @include respond-to(tablet) {
+        right: 20px;
+        top: 17px;
+      }
+    }
+    &:hover {
+      .todo-lst-item__close {
+        opacity: 1;
+      }
+    }
+    label {
+      cursor: pointer;
+      width: 100%;
+      position: relative;
+      padding: 12px 0 12px 40px;
+      @include respond-to(tablet) {
+        padding: 8px 0 8px 36px;
+      }
+      &:before {
+        content: '';
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        top: 50%;
+        left: 0;
+        border-radius: 50%;
+        transform: translateY(-50%);
+        @include respond-to(tablet) {
+          width: 18px;
+          height: 18px;
+        }
+        @include themify($themes) {
+          border: 1px solid themed('borderColor');
+        }
+      }
+      &:after {
+        content: '';
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        top: 50%;
+        left: 1px;
+        border-radius: 50%;
+        transform: translateY(-50%);
+        transition: all 0.3s ease-in-out;
+        background: url(../images/icon-check.svg), linear-gradient(135deg, #87bbe3, #a676ec);
+        background-repeat: no-repeat, no-repeat;
+        background-position: center, center;
+        opacity: 0;
+        @include respond-to(tablet) {
+          width: 18px;
+          height: 18px;
+        }
+      }
+    }
+    input[type=checkbox] {
+      display: none;
+      &:checked + label {
+        text-decoration: line-through;
+        @include themify($themes) {
+          color: themed('lightTextColor');
+        }
+        &:after {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+.todo-filter {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 50px;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 12px 24px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  @include respond-to(tablet) {
+    font-size: 12px;
+  }
+  @include themify($themes) {
+    color: themed('lightTextColor');  
+    background-color: themed('lightBackgroundColor');
+  }
+  &__remained {
+    margin-right: 30px;
+  }
+  &__btns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include respond-to(tablet) {
+      position: absolute;
+      border-radius: 5px;
+      width: 100%;
+      left: 0;
+      top: calc(100% + 16px);
+      height: 48px;
+      box-shadow: 0px 4px 15px 2px rgba(0,0,0,0.3);
+      @include themify($themes) {
+        background-color: themed('lightBackgroundColor');
+      }
+    }
+  }
+  &__btn {
+    border: none;
+    outline: none;
+    font-weight: bold;
+    background: transparent;
+    padding: 0;
+    @include respond-to(tablet) {
+      font-size: 12px;
+    }
+    @include themify($themes) {
+      color: themed('lightTextColor');  
+    }
+    &:not(:last-child) {
+      margin-right: 20px;
+    }
+    &:hover {
+      @include themify($themes) {
+        color: themed('hoverColor');  
+      }
+    }
+    &.active {
+      @include themify($themes) {
+        color: themed('textColor');  
+      }
+    }
+  }
+  &__clear {
+    .todo-filter__btn {
+      &:hover {
+        @include themify($themes) {
+          color: themed('textColor');  
+        }
+      }
+    }
+  }
+}
+.help {
+  font-size: 14px;
+  text-align: center;
+  margin-top: 50px;
+  @include respond-to(tablet) {
+    font-size: 12px;
+    margin-top: 100px;
+  }
+  @include themify($themes) {
+    color: themed('lightTextColor');
+  }
+}
+.table-sortable {
+    position: relative;
+    .sortable-placeholder {
+      height: 37px;
+      &:after {
+        content: " ";
+        position: absolute;
+        height: 37px;
+        left: 0;
+        right: 0;
+        z-index: 10;
+        @include themify($themes) {
+          background-color: themed('lightBackgroundColor');
+        }
+    }
+  }
+}

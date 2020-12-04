@@ -3,34 +3,79 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
-
   <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
-  
   <title>Frontend Mentor | Todo app</title>
-
-  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-  <style>
-    .attribution { font-size: 11px; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
-  </style>
+  <link rel="stylesheet" href="./css/style.css">
 </head>
-<body>
-
-  Todo
-
-  <!-- Add dynamic number --> items left
-
-  All
-  Active 
-  Completed
-
-  Clear Completed
-
-  Drag and drop to reorder list
-
-  <div class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
-    Coded by <a href="#">Your Name Here</a>.
+<body class="theme-dark">
+  <div class="page-content">
+    <div class="container">
+      <div class="header">
+        <h1>Todo</h1>
+        <div class="btn-wrap">
+          <button class="btn toggle-theme-btn">
+            <img class="dark-theme" src="./images/icon-moon.svg" alt="Dark Theme">
+            <img src="./images/icon-sun.svg" alt="Dark Theme">
+          </button>
+        </div>
+      </div>
+      <div class="add-wrapper">
+        <div class="new-item-wrapper">
+          <input type="text" name="new-item" id="new-item" placeholder="Create a new todo...">
+        </div>
+      </div>
+      <div class="todo-wrapper">
+        <div class="todo-panel">
+          <div class="todo-lst">
+            <div class="todo-lst-item">
+              <input type="checkbox" name="item_0" id="item_0">
+              <label for="item_0">Complete online Javascript course</label>
+              <button class="todo-lst-item__close"></button>
+            </div>
+            <div class="todo-lst-item">
+              <input type="checkbox" name="item_1" id="item_1">
+              <label for="item_1">Jog around the park 3x</label>
+              <button class="todo-lst-item__close"></button>
+            </div>
+            <div class="todo-lst-item">
+              <input type="checkbox" name="item_2" id="item_2">
+              <label for="item_2">10 minutes meditation</label>
+              <button class="todo-lst-item__close"></button>
+            </div>
+            <div class="todo-lst-item">
+              <input type="checkbox" name="item_3" id="item_3">
+              <label for="item_3">Read for 1 hour</label>
+              <button class="todo-lst-item__close"></button>
+            </div>
+            <div class="todo-lst-item">
+              <input type="checkbox" name="item_4" id="item_4">
+              <label for="item_4">Pick up groceries</label>
+              <button class="todo-lst-item__close"></button>
+            </div>
+            <div class="todo-lst-item">
+              <input type="checkbox" name="item_5" id="item_5">
+              <label for="item_5">Complete Todo App on Frontend Mentor</label>
+              <button class="todo-lst-item__close"></button>
+            </div>
+          </div>
+          <div class="todo-filter">
+            <div class="todo-filter__remained"><span>5</span> items left</div>
+            <div class="todo-filter__btns">
+              <button class="todo-filter__btn active" data-filter="0">All</button>
+              <button class="todo-filter__btn" data-filter="1">Active</button>
+              <button class="todo-filter__btn" data-filter="2">Completed</button>
+            </div>
+            <div class="todo-filter__clear">
+              <button class="todo-filter__btn" data-filter="-1">Clear Completed</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="help">Drag and drop to reorder list</p>
+    </div>
+    <script src="./scripts/jquery.min.js"></script>
+    <script src="./plugins/jquery.sortable.min.js"></script>
+    <script src="./scripts/script.js"></script>
   </div>
 </body>
 </html>
