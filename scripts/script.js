@@ -57,7 +57,7 @@ $(document).ready( function () {
   $('input[type=text]').on('keypress', function(e) {
     if (e.which == 13) {
       if( $(this).val() != '' ) {
-        $('.todo-lst').prepend('<div class="todo-lst-item"><input type="checkbox" name="item_' + cur_itms + '" id="item_' + cur_itms + '"><label for="item_' + cur_itms + '">' + $(this).val() + '</label><button class="todo-lst-item__close"></button></div>');
+        $('.todo-lst').prepend('<li class="todo-lst-item"><input type="checkbox" name="item_' + cur_itms + '" id="item_' + cur_itms + '"><label for="item_' + cur_itms + '">' + $(this).val() + '</label><button class="todo-lst-item__close"></button></li>');
         cur_itms++;
       }
       $(this).val('');
