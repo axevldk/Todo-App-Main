@@ -109,7 +109,7 @@ p {
       height: 200px;
     }
     @include themify($themes) {
-      opacity: themed('showOpacity');;
+      opacity: themed('showOpacity');
     }
   }
   &::after {
